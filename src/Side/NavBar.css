@@ -1,0 +1,18 @@
+#navbar {
+    position:fixed;
+    left:0;
+    width:33%;
+  
+    background:#F6F6F6;
+    z-index:100;
+    padding:10px;
+    border: solid #A7D7F9 1px;
+    margin:7px;
+  }
+
+.close-btn {
+font-weight: bold; 
+right:0px;
+top:0; 
+position:absolute;
+}
