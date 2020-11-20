@@ -35,6 +35,9 @@ export class SideTab extends React.Component {
     }
 
     render() {
+        if (!this.state.open) {
+            return null;
+        }
         return (
         <div id='side' className='col-md-4'>
             <button className='btn close-btn' onClick={this.close}>&times;</button>
