@@ -2,12 +2,10 @@ import React from 'react';
 import ForceGraph2D from 'react-force-graph-2d';
 
 export class Graph extends React.Component {
-
     constructor(props) {
         super(props);
         this.fgRef = React.createRef();
         this.state = {
-            selectedNode: "",
             hoverNode: "",
             visited: new Set(),
             highlightLinks: new Set()
@@ -30,7 +28,7 @@ export class Graph extends React.Component {
                     ctx.textAlign = 'center';
                     ctx.textBaseline = 'middle';
 
-                    if (this.state.selectedNode === node) { // probably a way to optimize this control flow...
+                    if (this.props.node === node) { // probably a way to optimize this control flow...
                         ctx.fillStyle = '#0000FF';
                     } else if (this.state.hoverNode === node) {
                         ctx.fillStyle = '#751F80';
@@ -53,17 +51,13 @@ export class Graph extends React.Component {
                 }}
                 onNodeClick={node => { // FIX THIS REACT
                     if (node) {
-                        // document.getElementById('main-info').innerHTML = node.description;
-                        // document.getElementById('info-title').innerHTML = node.name;
-                        // document.getElementById('wiki-link').href = node.href;
-                        // document.getElementById('wiki-link').innerHTML = 'Read More';
-                        // openSide();
-
-                        this.setState({selectedNode: node});
+                        this.props.setNode(node);
+                        this.props.openSide();
+                        
                         this.setState({highlightLinks: new Set()});
 
                         for (var link of this.props.data.links) { // there must be a way to optimize this
-                            if (link.source.id === this.state.selectedNode.id || link.target.id === this.state.selectedNode.id) {
+                            if (link.source.id === node.id || link.target.id === node.id) {
                                 this.state.highlightLinks.add(link);
                             }
                         }
@@ -74,7 +68,8 @@ export class Graph extends React.Component {
                 }}
                 onBackgroundClick={() => {
                     this.setState({highlightLinks: new Set()});
-                    this.setState({selectedNode: null});
+                    this.props.closeSide();
+                    this.props.setNode({});
                 }}
                 linkWidth={link => 
                     this.state.highlightLinks.has(link) ? 5 : 1
