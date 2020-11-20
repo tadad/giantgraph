@@ -33,7 +33,7 @@ export class App extends React.Component {
         return (
             <React.StrictMode>
                 <div className='col-lg' id="graph">
-                    <Graph data={this.props.data} setNode={this.setNode} openSide={this.openSide} closeSide={this.closeSide}/>
+                    <Graph data={this.props.data} node={this.state.node} setNode={this.setNode} openSide={this.openSide} closeSide={this.closeSide}/>
                 </div>
                 <div className='col-md-4' id="sidebar" style={{position: "fixed"}}>
                     <SideTab open={this.state.open} closeSide={this.closeSide} node={this.state.node}/>

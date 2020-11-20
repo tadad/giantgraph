@@ -6,6 +6,7 @@ export class Graph extends React.Component {
         super(props);
         this.fgRef = React.createRef();
         this.state = {
+            selectedNode: "",
             hoverNode: "",
             visited: new Set(),
             highlightLinks: new Set()
@@ -20,15 +21,15 @@ export class Graph extends React.Component {
                 enableNodeDrag={false}
                 nodeLabel='href'
                 nodeCanvasObject={(node, ctx, globalScale) => {
-                    const fontSize = Math.max((node.value * 300) / globalScale, 2);
+                    const fontSize = Math.max((node.value * 300) / globalScale, 2); // this formula has to change with the 
 
                     ctx.font = `${fontSize}px Times-new-roman`;
                     node.val = fontSize;
 
                     ctx.textAlign = 'center';
                     ctx.textBaseline = 'middle';
-
-                    if (this.props.node === node) { // probably a way to optimize this control flow...
+                    
+                    if (this.props.node && this.props.node.id === node.id) { // probably a way to optimize this control flow...
                         ctx.fillStyle = '#0000FF';
                     } else if (this.state.hoverNode === node) {
                         ctx.fillStyle = '#751F80';
@@ -54,13 +55,13 @@ export class Graph extends React.Component {
                         this.props.setNode(node);
                         this.props.openSide();
                         
-                        this.setState({highlightLinks: new Set()});
-
+                        let highlightLinks = new Set();
                         for (var link of this.props.data.links) { // there must be a way to optimize this
                             if (link.source.id === node.id || link.target.id === node.id) {
-                                this.state.highlightLinks.add(link);
+                                highlightLinks.add(link);
                             }
                         }
+                        this.setState({highlightLinks: highlightLinks});
                         this.setState({visited: this.state.visited.add(node.id)})
                         this.fgRef.current.centerAt(node.x - 40, node.y, 1000); // Change node.x to something to do with screen width
                         this.fgRef.current.zoom(5, 2000);
@@ -68,8 +69,6 @@ export class Graph extends React.Component {
                 }}
                 onBackgroundClick={() => {
                     this.setState({highlightLinks: new Set()});
-                    this.props.closeSide();
-                    this.props.setNode({});
                 }}
                 linkWidth={link => 
                     this.state.highlightLinks.has(link) ? 5 : 1
