@@ -7,7 +7,7 @@ export class SideTab extends React.Component {
             return null;
         }
         return (
-            <div id='side' className='col-md-4'>
+            <div id='SideTab'>
                 <button className='btn close-btn' onClick={this.props.closeSide}>&times;</button>
                 <h1 id='info-title'>{this.props.node.name}</h1>
                 <hr />
