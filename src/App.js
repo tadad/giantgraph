@@ -1,7 +1,7 @@
 import React from 'react';
-import {SideTab} from './Side/SideTab.js';
-import {NavBar} from './Side/NavBar.js';
-import {Graph} from './Graph/Graph.js';
+import { SideTab } from './Side/SideTab.js';
+import { NavBar } from './Side/NavBar.js';
+import { Graph } from './Graph/Graph.js';
 import './App.css';
 
 export class App extends React.Component {
@@ -18,30 +18,31 @@ export class App extends React.Component {
     }
 
     openSide() {
-        this.setState({open:true});
+        this.setState({ open: true });
     }
 
     closeSide() {
-        this.setState({open:false});
+        this.setState({ open: false });
     }
 
     setNode(node) {
-        this.setState({node: node});
+        this.setState({ node: node });
     }
 
     render() {
         return (
             <div className='row'>
+                <p>Flask Token = {window.token}</p>
                 <div className='col-md-4' id="sidebar">
                     <NavBar />
-                    <SideTab open={this.state.open} closeSide={this.closeSide} node={this.state.node}/>
+                    <SideTab open={this.state.open} closeSide={this.closeSide} node={this.state.node} />
                 </div>
                 <div className='col-lg' id="graph">
-                    <Graph data={this.props.data} node={this.state.node} setNode={this.setNode} openSide={this.openSide} closeSide={this.closeSide}/>
+                    <Graph data={this.props.data} node={this.state.node} setNode={this.setNode} openSide={this.openSide} closeSide={this.closeSide} />
                 </div>
             </div>
         );
-    }  
+    }
 }
 
 export default App;
