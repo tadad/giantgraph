@@ -9,19 +9,21 @@ export class Graph extends React.Component {
             selectedNode: "",
             hoverNode: "",
             visited: new Set(),
-            highlightLinks: new Set()
+            highlightLinks: new Set(),
+            data: {},
+            isLoaded: false
         }
     }
 
     fetchData = (search) => {
         fetch("/see?search=" + search)
-            .then(res => console.log(res))
+            .then(res => console.log(res.data))
             .then(res => res.json())
             .then(
                 (result) => {
                     this.setState({
                         isLoaded: true,
-                        items: result.items
+                        data: result.data
                     });
                 }
             )
@@ -31,7 +33,7 @@ export class Graph extends React.Component {
         return (
             <ForceGraph2D
                 ref={this.fgRef}
-                graphData={this.fetchData("Halloween")}
+                graphData={this.props.searchTerm ? this.fetchData(this.props.searchTerm) : {}}
                 enableNodeDrag={false}
                 nodeLabel='href'
                 nodeCanvasObject={(node, ctx, globalScale) => {

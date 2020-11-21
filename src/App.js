@@ -10,6 +10,7 @@ export class App extends React.Component {
         this.state = {
             open: false,
             node: null,
+            searchTerm: ""
         }
 
         this.openSide = this.openSide.bind(this);
@@ -29,16 +30,20 @@ export class App extends React.Component {
         this.setState({ node: node });
     }
 
+    setSearchTerm = (searchTerm) => {
+        this.setState({ searchTerm })
+    }
+
     render() {
         return (
             <div className='row'>
-                <p>Flask Token = {window.token}</p>
+                {/* <p>Flask Token = {window.token}</p> */}
                 <div className='col-md-4' id="sidebar">
                     <NavBar />
                     <SideTab open={this.state.open} closeSide={this.closeSide} node={this.state.node} />
                 </div>
                 <div className='col-lg' id="graph">
-                    <Graph data={this.props.data} node={this.state.node} setNode={this.setNode} openSide={this.openSide} closeSide={this.closeSide} />
+                    <Graph searchTerm={this.state.searchTerm} node={this.state.node} setNode={this.setNode} openSide={this.openSide} closeSide={this.closeSide} />
                 </div>
             </div>
         );
