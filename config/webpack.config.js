@@ -553,7 +553,8 @@ module.exports = function (webpackEnv) {
           {
             inject: true,
             template: paths.appHtml,
-            filename: "../../graph-flask/templates/index.html",
+            filename: "../../templates/index.html",
+
           },
           isEnvProduction
             ? {
