@@ -13,11 +13,25 @@ export class Graph extends React.Component {
         }
     }
 
+    fetchData = (search) => {
+        fetch("/see?search=" + search)
+            .then(res => console.log(res))
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    this.setState({
+                        isLoaded: true,
+                        items: result.items
+                    });
+                }
+            )
+    }
+
     render() {
         return (
             <ForceGraph2D
                 ref={this.fgRef}
-                graphData={this.props.data}
+                graphData={this.fetchData("Halloween")}
                 enableNodeDrag={false}
                 nodeLabel='href'
                 nodeCanvasObject={(node, ctx, globalScale) => {
@@ -28,7 +42,7 @@ export class Graph extends React.Component {
 
                     ctx.textAlign = 'center';
                     ctx.textBaseline = 'middle';
-                    
+
                     if (this.props.node && this.props.node.id === node.id) { // probably a way to optimize this control flow...
                         ctx.fillStyle = '#0000FF';
                     } else if (this.state.hoverNode === node) {
@@ -40,38 +54,40 @@ export class Graph extends React.Component {
                     }
 
                     ctx.fillText(node.name, node.x, node.y);
-                }}
+                }
+                }
                 onNodeHover={node => {
                     if (node) {
                         document.body.style.cursor = 'pointer';
-                        this.setState({hoverNode: node});
+                        this.setState({ hoverNode: node });
                     } else {
                         document.body.style.cursor = 'default';
-                        this.setState({hoverNode: null});
+                        this.setState({ hoverNode: null });
                     }
                 }}
                 onNodeClick={node => { // FIX THIS REACT
                     if (node) {
                         this.props.setNode(node);
                         this.props.openSide();
-                        
+
                         let highlightLinks = new Set();
                         for (var link of this.props.data.links) { // there must be a way to optimize this
                             if (link.source.id === node.id || link.target.id === node.id) {
                                 highlightLinks.add(link);
                             }
                         }
-                        this.setState({highlightLinks: highlightLinks});
-                        this.setState({visited: this.state.visited.add(node.id)})
+                        this.setState({ highlightLinks: highlightLinks });
+                        this.setState({ visited: this.state.visited.add(node.id) })
                         this.fgRef.current.centerAt(node.x - 40, node.y, 1000); // Change node.x to something to do with screen width
                         this.fgRef.current.zoom(5, 2000);
                     }
                 }}
                 onBackgroundClick={() => {
-                    this.setState({highlightLinks: new Set()});
+                    this.setState({ highlightLinks: new Set() });
                 }}
-                linkWidth={link => 
-                    this.state.highlightLinks.has(link) ? 5 : 1
+                linkWidth={
+                    link =>
+                        this.state.highlightLinks.has(link) ? 5 : 1
                 }
                 cooldownTicks={50}
                 onEngineStop={() => this.fgRef.current.zoomToFit(400)}
