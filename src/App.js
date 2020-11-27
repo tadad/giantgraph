@@ -1,7 +1,8 @@
+/* eslint-disable */
 import React from 'react';
-import { SideTab } from './Side/SideTab.js';
-import { NavBar } from './Side/NavBar.js';
-import { Graph } from './Graph/Graph.js';
+import { SideTab } from './Side/SideTab';
+import { NavBar } from './Side/NavBar';
+import { Graph } from './Graph/Graph';
 import { AppContext } from './AppContext';
 import './App.css';
 
@@ -12,9 +13,9 @@ export class App extends React.Component {
     super(props);
 
     this.state = {
-      data: data,
+      data: data, // eslint-disable-line
       sideIsOpen: false,
-      selectedNode: {name: "test", description: "test desc", href: "ref", id: 0},
+      selectedNode: null,
     };
 
     this.openSide = this.openSide.bind(this);
@@ -22,34 +23,36 @@ export class App extends React.Component {
     this.setNode = this.setNode.bind(this);
   }
 
+  setNode(node) {
+    this.setState({ selectedNode: node });
+  }
+
   openSide() {
-    this.setState({sideIsOpen:true});
+    this.setState({ sideIsOpen: true });
   }
 
   closeSide() {
-    this.setState({sideIsOpen:false});
-  }
-
-  setNode(node) {
-    this.setState({selectedNode: node});
+    this.setState({ sideIsOpen: false });
   }
 
   render() {
+    const { data, sideIsOpen, selectedNode } = this.state;
     return (
       <AppContext.Provider value={{
-        data: this.state.data, 
-        sideIsOpen: this.state.sideIsOpen, 
-        selectedNode: this.state.selectedNode, 
-        openSide: this.openSide, 
-        closeSide: this.closeSide, 
-        setNode: this.setNode
-      }}>
-        <div className='row'>
-          <div className='col-md-4' id="sidebar">
+        data,
+        sideIsOpen,
+        selectedNode,
+        openSide: this.openSide,
+        closeSide: this.closeSide,
+        setNode: this.setNode,
+      }}
+      >
+        <div className="row">
+          <div className="col-md-4" id="sidebar">
             <NavBar />
             <SideTab />
           </div>
-          <div className='col-lg' id="graph">
+          <div className="col-lg" id="graph">
             <Graph />
           </div>
         </div>
@@ -59,4 +62,3 @@ export class App extends React.Component {
 }
 
 export default App;
-

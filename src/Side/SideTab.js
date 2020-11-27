@@ -1,20 +1,21 @@
-import React, {useContext} from 'react';
+/* eslint-disable */
+import React, { useContext } from 'react';
 import { AppContext } from '../AppContext';
-import './SideTab.css'
+import './SideTab.css';
 
 export function SideTab() {
-  let context = useContext(AppContext);
+  const { sideIsOpen, selectedNode, closeSide } = useContext(AppContext);
 
-  if (!context.sideIsOpen) {
+  if (!sideIsOpen) {
     return null;
   }
   return (
-    <div id='SideTab'>
-      <button className='btn close-btn' onClick={context.closeSide}>&times;</button>
-      <h1 id='info-title'>{context.selectedNode.name}</h1>
+    <div id="SideTab">
+      <button type="button" className="btn close-btn" onClick={closeSide}>&times;</button>
+      <h1 id="info-title">{selectedNode.name}</h1>
       <hr />
-      <p id='main-info'>{context.selectedNode.description}</p>
-      <p><a href={context.selectedNode.href} target='_blank' rel="noreferrer" id='wiki-link'>Read More</a></p>
+      <p id="main-info">{selectedNode.description}</p>
+      <p><a href={selectedNode.href} target="_blank" rel="noreferrer" id="wiki-link">Read More</a></p>
     </div>
   );
 }
