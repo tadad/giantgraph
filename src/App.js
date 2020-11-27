@@ -1,47 +1,61 @@
 import React from 'react';
-import {SideTab} from './Side/SideTab.js';
-import {NavBar} from './Side/NavBar.js';
-import {Graph} from './Graph/Graph.js';
+import { SideTab } from './Side/SideTab.js';
+import { NavBar } from './Side/NavBar.js';
+import { Graph } from './Graph/Graph.js';
+import { AppContext } from './AppContext';
 import './App.css';
 
+const data = require('./Renaissance.json'); // needs to be dynamically fetched from server
+
 export class App extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            open: false,
-            node: null,
-        }
+  constructor(props) {
+    super(props);
 
-        this.openSide = this.openSide.bind(this);
-        this.closeSide = this.closeSide.bind(this);
-        this.setNode = this.setNode.bind(this);
-    }
+    this.state = {
+      data: data,
+      sideIsOpen: false,
+      selectedNode: {name: "test", description: "test desc", href: "ref", id: 0},
+    };
 
-    openSide() {
-        this.setState({open:true});
-    }
+    this.openSide = this.openSide.bind(this);
+    this.closeSide = this.closeSide.bind(this);
+    this.setNode = this.setNode.bind(this);
+  }
 
-    closeSide() {
-        this.setState({open:false});
-    }
+  openSide() {
+    this.setState({sideIsOpen:true});
+  }
 
-    setNode(node) {
-        this.setState({node: node});
-    }
+  closeSide() {
+    this.setState({sideIsOpen:false});
+  }
 
-    render() {
-        return (
-            <div className='row'>
-                <div className='col-md-4' id="sidebar">
-                    <NavBar />
-                    <SideTab open={this.state.open} closeSide={this.closeSide} node={this.state.node}/>
-                </div>
-                <div className='col-lg' id="graph">
-                    <Graph data={this.props.data} node={this.state.node} setNode={this.setNode} openSide={this.openSide} closeSide={this.closeSide}/>
-                </div>
-            </div>
-        );
-    }  
+  setNode(node) {
+    this.setState({selectedNode: node});
+  }
+
+  render() {
+    return (
+      <AppContext.Provider value={{
+        data: this.state.data, 
+        sideIsOpen: this.state.sideIsOpen, 
+        selectedNode: this.state.selectedNode, 
+        openSide: this.openSide, 
+        closeSide: this.closeSide, 
+        setNode: this.setNode
+      }}>
+        <div className='row'>
+          <div className='col-md-4' id="sidebar">
+            <NavBar />
+            <SideTab />
+          </div>
+          <div className='col-lg' id="graph">
+            <Graph />
+          </div>
+        </div>
+      </AppContext.Provider>
+    );
+  }
 }
 
 export default App;

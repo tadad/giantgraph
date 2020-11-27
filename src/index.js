@@ -1,12 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import {App} from './App.js';
-
-const data = require('./Renaissance.json'); // needs to be dynamically fetched from server
+import { App } from './App';
 
 ReactDOM.render(
-  <App data={data}/>,
+  <App />,
   document.getElementById('root')
 );
  
