@@ -1,6 +1,10 @@
 [
+<<<<<<< HEAD
     {"name": "a"},
     {"name": "aaaaa"},
     {"name": "aaaaaaaaa"},
     {"name": "aaaaaaaaaaaaa"}
+=======
+    {"name": "a", "code":"B"}
+>>>>>>> master
 ]
