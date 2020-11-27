@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React from 'react';
 import { SideTab } from './Side/SideTab';
 import { NavBar } from './Side/NavBar';
@@ -6,14 +5,14 @@ import { Graph } from './Graph/Graph';
 import { AppContext } from './AppContext';
 import './App.css';
 
-const data = require('./Renaissance.json'); // needs to be dynamically fetched from server
+const hardData = require('./Renaissance.json'); // needs to be dynamically fetched from server
 
 export class App extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      data: data, // eslint-disable-line
+      data: hardData, // eslint-disable-line
       sideIsOpen: false,
       selectedNode: null,
     };

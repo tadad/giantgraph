@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React, { useContext } from 'react';
 import { AppContext } from '../AppContext';
 import './SideTab.css';

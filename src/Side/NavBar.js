@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React from 'react';
 import Autosuggest from 'react-autosuggest';
 import './NavBar.css';
