@@ -5,7 +5,7 @@ import './SideTab.css';
 export function SideTab() {
   const { sideIsOpen, selectedNode, closeSide } = useContext(AppContext);
 
-  if (!sideIsOpen) {
+  if (!sideIsOpen) { // probably switch this to a ternary operator in the main return block
     return null;
   }
   return (

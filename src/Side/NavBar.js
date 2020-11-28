@@ -4,8 +4,10 @@ import { withRouter } from 'react-router-dom';
 import { AppContext } from '../AppContext';
 import './NavBar.css';
 
+// I know this isn't permanent, but even for the time being move to an assets directory
 const countries = require('./countries.json');
 
+// please stop using all caps it hurts my soul
 // GET RID OF THIS ONCE WE HAVE WIKI AUTOSUGGEST
 const getSuggestions = (value) => {
   const inputValue = value.trim().toLowerCase();
@@ -39,6 +41,7 @@ export class NavBar extends React.Component {
     });
   };
 
+  // this probably should be moved to context
   onSuggestionsFetchRequested = ({ value }) => {
     this.setState({
       suggestions: getSuggestions(value),

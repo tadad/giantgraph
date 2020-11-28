@@ -3,9 +3,9 @@ import ForceGraph2D from 'react-force-graph-2d';
 import { AppContext } from '../AppContext';
 
 export class Graph extends React.Component {
-  constructor(props) {
+  constructor(props) { // you don't need props if you don't use them anywhere else in the component (true for all other components)
     super(props);
-    this.fgRef = React.createRef();
+    this.fgRef = React.createRef(); // looks like there isn't really a way to do this without refs, but refs are generally considered ugly
     this.state = {
       hoverNode: '',
       visited: new Set(),
@@ -51,7 +51,7 @@ export class Graph extends React.Component {
         }}
         onNodeHover={(node) => {
           if (node) {
-            document.body.style.cursor = 'pointer';
+            document.body.style.cursor = 'pointer'; // never access anything using document - it's fine to use inline styles in this case
             this.setState({ hoverNode: node });
           } else {
             document.body.style.cursor = 'default';
