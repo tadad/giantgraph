@@ -1,4 +1,7 @@
 import React from 'react';
+import { Route } from 'react-router-dom';
+import { Home } from './Home';
+import { About } from './About';
 import { SideTab } from './Side/SideTab';
 import { NavBar } from './Side/NavBar';
 import { Graph } from './Graph/Graph';
@@ -37,25 +40,31 @@ export class App extends React.Component {
   render() {
     const { data, sideIsOpen, selectedNode } = this.state;
     return (
-      <AppContext.Provider value={{
-        data,
-        sideIsOpen,
-        selectedNode,
-        openSide: this.openSide,
-        closeSide: this.closeSide,
-        setNode: this.setNode,
-      }}
-      >
-        <div className="row">
-          <div className="col-md-4" id="sidebar">
-            <NavBar />
-            <SideTab />
-          </div>
-          <div className="col-lg" id="graph">
-            <Graph />
-          </div>
-        </div>
-      </AppContext.Provider>
+      <>
+        <Route exact path="/" component={Home} />
+        <Route path="/about" component={About} />
+        <Route path="/see">
+          <AppContext.Provider value={{
+            data,
+            sideIsOpen,
+            selectedNode,
+            openSide: this.openSide,
+            closeSide: this.closeSide,
+            setNode: this.setNode,
+          }}
+          >
+            <div className="row">
+              <div className="col-md-4" id="sidebar">
+                <Route component={NavBar} />
+                <SideTab />
+              </div>
+              <div className="col-lg" id="graph">
+                <Graph />
+              </div>
+            </div>
+          </AppContext.Provider>
+        </Route>
+      </>
     );
   }
 }
