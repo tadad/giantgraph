@@ -1,0 +1,21 @@
+11/28 Code Review:
+
+General notes that don't belong in specific files:
+	- Some files have two space indent, some have four - what the fuck
+	- Write a real readme
+	- Structure: the subdirectories are poorly organized
+		- Why is AppContext just out in src; state management is pretty much the most central thing to an app, give it it's own directory
+		- Why is there a directory for just Graph stuff
+		- Use an assets directory in public/ for static files (jsons - yes, even if they're just temporarily hard coded)
+		- Why is About.js in src
+
+Notes I put in files but want to emphasize:
+	- Stop importing react in functional components 
+		- More generally, don't import shit you aren't using and check you use everything you import
+	- Stop exporting functional components twice (hint: if they're a default export, you don't need to make them a non-default export)
+	
+Styling notes:
+	- Don't use IDs for things that may be used again
+	- Never, ever, ever access DOM elements directly, literally everything else is preferable to that
+	- HRs are questionable (sort of thought of as similar to &nbsp)
+	- If you need a z-index something is probably gross
