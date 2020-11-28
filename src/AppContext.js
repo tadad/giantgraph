@@ -2,8 +2,8 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-const axios = require('axios');
 const hardData = require('./Renaissance.json'); // needs to be dynamically fetched from server
+
 // eslint complains that it "prefers default." No idea what that means or why i should care
 export const AppContext = React.createContext();
 
@@ -24,7 +24,6 @@ class AppProvider extends React.Component {
 
   setSearchValue = (newValue) => {
     this.props.history.push('/see/' + newValue); //eslint-disable-line
-    axios.get(`/api/see/${newValue}`).then((response) => { console.log(response); });
   }
 
   openSide = () => {
@@ -48,7 +47,7 @@ class AppProvider extends React.Component {
         searchValue,
         setNode: this.setNode,
         setSearchValue: this.setSearchValue,
-        openSide: this.openSide, // ???
+        openSide: this.openSide,
         closeSide: this.closeSide,
       }}
       >

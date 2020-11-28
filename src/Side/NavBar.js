@@ -1,7 +1,6 @@
 /* eslint-disable */
 import React from 'react';
 import { withRouter } from 'react-router-dom';
-import Autosuggest from 'react-autosuggest';
 import { AppContext } from '../AppContext';
 import './NavBar.css';
 
@@ -62,18 +61,7 @@ export class NavBar extends React.Component {
             <form onSubmit={() => context.setSearchValue(value)}>
               <input type="text" onChange={this.onChange} />
               <input type="submit" />
-              {/* <Autosuggest
-                suggestions={suggestions}
-                onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-                onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-                getSuggestionValue={(s) => s.name}
-                renderSuggestion={(s) => <div>{s.name}</div>}
-                inputProps={{
-                  placeholder: 'Search',
-                  value,
-                  onChange: this.onChange,
-                }}
-              /> */}
+              {/* STYLE THIS SEARCH BOX/BAR, CHANGE CSS FILE */}
             </form>
           );
         }}
