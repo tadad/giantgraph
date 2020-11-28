@@ -22,6 +22,6 @@
     display: none;
 }
 
-#graph {
-    z-index: 1;
+#graph { 
+		z-index: 1; /* You should virtually never use z-index - it's hacky as fuck (legit use cases should be commented) */
 }

@@ -37,7 +37,7 @@ export class Graph extends React.Component {
           ctx.textBaseline = 'middle';
 
           // probably a way to optimize this control flow...
-          if (selectedNode && selectedNode.id === node.id) {
+          if (selectedNode && selectedNode.id === node.id) { // I'm just gonna like not even comment on this but yeah I gagged
             ctx.fillStyle = '#0000FF';
           } else if (hoverNode === node) {
             ctx.fillStyle = '#751F80';
@@ -49,9 +49,9 @@ export class Graph extends React.Component {
 
           ctx.fillText(node.name, node.x, node.y);
         }}
-        onNodeHover={(node) => {
+        onNodeHover={(node) => { // change node to hoverNode so you can use { hoverNode } in the setState
           if (node) {
-            document.body.style.cursor = 'pointer'; // never access anything using document - it's fine to use inline styles in this case
+            document.body.style.cursor = 'pointer'; // didn't we already talk about not using document.x- it's fine to use inline styles in this case
             this.setState({ hoverNode: node });
           } else {
             document.body.style.cursor = 'default';
@@ -65,14 +65,19 @@ export class Graph extends React.Component {
             openSide();
 
             const newHighlightLinks = new Set();
-            data.links.forEach((link) => {
+            data.links.forEach((link) => { // you're joking right - look at map, filter, and reduce
+              // there are like 3 valid use cases for forEach and this is definitely not one of them
               if (link.source.id === node.id || link.target.id === node.id) {
                 newHighlightLinks.add(link);
               }
             });
 
             this.setState({ highlightLinks: newHighlightLinks });
-            this.setState({ visited: visited.add(node.id) });
+            this.setState({ visited: visited.add(node.id) }); // this is disgusting please look at spread syntax
+            // ^problems with this: 
+            //    a) You're using the visited state value without doing a callback (possibility of async fucking stuff up)
+            //    b) You're doing logic in a setState
+            //    c) You're appending to a list state element - spread syntax
 
             // Change node.x to something to do with screen width
             this.fgRef.current.centerAt(node.x - 40, node.y, 1000);

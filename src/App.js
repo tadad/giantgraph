@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'; // where is this being used
 import { Route } from 'react-router-dom';
 import { Home } from './Home';
 import { About } from './About';
@@ -8,47 +8,10 @@ import { Graph } from './Graph/Graph';
 import AppProvider from './AppContext';
 import './App.css';
 
-<<<<<<< Updated upstream
 export function App() {
   return (
     <>
       <AppProvider>
-=======
-const hardData = require('./Renaissance.json'); // needs to be dynamically fetched from server
-
-export class App extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      data: hardData, // eslint-disable-line
-      sideIsOpen: false,
-      selectedNode: null,
-    };
-
-    this.openSide = this.openSide.bind(this);
-    this.closeSide = this.closeSide.bind(this);
-    this.setNode = this.setNode.bind(this);
-  }
-
-  // move to context obv
-  setNode(node) {
-    this.setState({ selectedNode: node });
-  }
-
-  openSide() {
-    this.setState({ sideIsOpen: true });
-  }
-
-  closeSide() {
-    this.setState({ sideIsOpen: false });
-  }
-
-  render() {
-    const { data, sideIsOpen, selectedNode } = this.state;
-    return (
-      <>
->>>>>>> Stashed changes
         <Route exact path="/" component={Home} />
       </AppProvider>
       <Route path="/about" component={About} />

@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'; // where is this being used
 import { Route, Link } from 'react-router-dom';
 import { NavBar } from './Side/NavBar';
 

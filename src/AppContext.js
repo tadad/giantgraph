@@ -22,6 +22,9 @@ class AppProvider extends React.Component {
     this.setState({ selectedNode: node });
   }
 
+  // shouldn't need to say this but if you're disabling a lint rule you're doing something wrong
+  // or if it is an actual decision to go against the line (not just trying to get shit to compile)
+  // then you need to comment explaining why it's a valid use case
   setSearchValue = (newValue) => {
     this.props.history.push('/see/' + newValue); //eslint-disable-line
   }
