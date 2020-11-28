@@ -11,7 +11,9 @@ import './App.css';
 export function App() {
   return (
     <>
-      <Route exact path="/" component={Home} />
+      <AppProvider>
+        <Route exact path="/" component={Home} />
+      </AppProvider>
       <Route path="/about" component={About} />
       <Route path="/see">
         <AppProvider>

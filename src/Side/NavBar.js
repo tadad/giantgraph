@@ -18,7 +18,6 @@ const getSuggestions = (value) => {
 };
 
 export class NavBar extends React.Component {
-
   constructor() {
     super();
     this.state = {
@@ -58,10 +57,9 @@ export class NavBar extends React.Component {
 
     return (
       <AppContext.Consumer>
-        { (searchValue, setSearchValue) => {
-          return searchValue ?
-          (
-            <form onSubmit={() => setSearchValue(value)}>
+        { (context) => {
+          return (
+            <form onSubmit={() => context.setSearchValue(value)}>
               <input type="text" onChange={this.onChange} />
               <input type="submit" />
               {/* <Autosuggest
@@ -77,13 +75,11 @@ export class NavBar extends React.Component {
                 }}
               /> */}
             </form>
-          ) : <div>error</div>
+          );
         }}
       </AppContext.Consumer>
     );
   }
 }
-
-// NavBar.contextType = AppContext;
 
 export default withRouter(NavBar);
