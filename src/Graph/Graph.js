@@ -14,12 +14,13 @@ export class Graph extends React.Component {
   }
 
   render() {
-    const { context } = this;
-
+    const {
+      data, selectedNode, setNode, openSide,
+    } = this.context;
     return (
       <ForceGraph2D
         ref={this.fgRef}
-        graphData={context.data}
+        graphData={data}
         enableNodeDrag={false}
         nodeLabel="href"
         nodeCanvasObject={(node, ctx, globalScale) => {
@@ -36,7 +37,7 @@ export class Graph extends React.Component {
           ctx.textBaseline = 'middle';
 
           // probably a way to optimize this control flow...
-          if (context.selectedNode && context.selectedNode.id === node.id) {
+          if (selectedNode && selectedNode.id === node.id) {
             ctx.fillStyle = '#0000FF';
           } else if (hoverNode === node) {
             ctx.fillStyle = '#751F80';
@@ -60,11 +61,11 @@ export class Graph extends React.Component {
         onNodeClick={(node) => {
           if (node) {
             const { visited } = this.state;
-            context.setNode(node);
-            context.openSide();
+            setNode(node);
+            openSide();
 
             const newHighlightLinks = new Set();
-            context.data.links.forEach((link) => {
+            data.links.forEach((link) => {
               if (link.source.id === node.id || link.target.id === node.id) {
                 newHighlightLinks.add(link);
               }
