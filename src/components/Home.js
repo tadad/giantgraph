@@ -1,8 +1,8 @@
-import React from 'react'; // where is this being used
+import React from 'react';
 import { Route, Link } from 'react-router-dom';
-import { NavBar } from './Side/NavBar';
+import { NavBar } from './NavBar';
 
-export function Home() {
+export default function Home() {
   return (
     <>
       <Link to="/about"><h1>wikigraph</h1></Link>
@@ -10,5 +10,3 @@ export function Home() {
     </>
   );
 }
-
-export default Home;

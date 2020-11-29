@@ -1,7 +1,7 @@
-import React from 'react'; // you never use this
+import React from 'react';
 import { Link } from 'react-router-dom';
 
-export function About() { // am I missing why you export this twice?
+export default function About() {
   return (
     <>
       <Link to="/"><h1>wikigraph</h1></Link>
@@ -9,5 +9,3 @@ export function About() { // am I missing why you export this twice?
     </>
   );
 }
-
-export default About;

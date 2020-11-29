@@ -2,9 +2,8 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-const hardData = require('./Renaissance.json'); // needs to be dynamically fetched from server
+const hardData = require('../Renaissance.json'); // needs to be dynamically fetched from server
 
-// eslint complains that it "prefers default." No idea what that means or why i should care
 export const AppContext = React.createContext();
 
 class AppProvider extends React.Component {
@@ -22,11 +21,9 @@ class AppProvider extends React.Component {
     this.setState({ selectedNode: node });
   }
 
-  // shouldn't need to say this but if you're disabling a lint rule you're doing something wrong
-  // or if it is an actual decision to go against the line (not just trying to get shit to compile)
-  // then you need to comment explaining why it's a valid use case
   setSearchValue = (newValue) => {
-    this.props.history.push('/see/' + newValue); //eslint-disable-line
+    const { history } = this.props;
+    history.push(`/see/${newValue}`);
   }
 
   openSide = () => {
@@ -62,6 +59,7 @@ class AppProvider extends React.Component {
 
 AppProvider.propTypes = {
   children: PropTypes.element.isRequired,
+  // object is not allowed as a proptype for eslint...
   history: PropTypes.object.isRequired, // eslint-disable-line
 };
 
