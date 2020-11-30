@@ -23,6 +23,7 @@ class AppProvider extends React.Component {
       console.log(`setting search value: ${this.state.searchValue}`); //eslint-disable-line
       const { history } = this.props;
       history.push(`/see/${searchValue}`);
+      // check if you need to do a preventDefault() here to stop a hard page reload
     });
   }
 

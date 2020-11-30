@@ -18,6 +18,8 @@ export class Graph extends React.Component {
   }
 
   componentDidMount() {
+    // Pull the context out of the componentDidMount (only gets called once so
+    // it'll only update the searchValue once)
     const { searchValue } = this.context;
     console.log(`searchValue (componentDidMount): ${searchValue}...`); // for some reason this is not updated
     if (searchValue) {
