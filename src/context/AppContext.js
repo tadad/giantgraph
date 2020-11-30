@@ -2,16 +2,13 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-const hardData = require('../Renaissance.json'); // needs to be dynamically fetched from server
-
 export const AppContext = React.createContext();
 
 class AppProvider extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: hardData,
-      searchValue: 'asdf',
+      searchValue: 'renaissance',
       sideIsOpen: false,
       selectedNode: null,
     };
@@ -21,9 +18,12 @@ class AppProvider extends React.Component {
     this.setState({ selectedNode: node });
   }
 
-  setSearchValue = (newValue) => {
-    const { history } = this.props;
-    history.push(`/see/${newValue}`);
+  setSearchValue = (searchValue) => {
+    this.setState({ searchValue }, () => {
+      console.log(`setting search value: ${this.state.searchValue}`); //eslint-disable-line
+      const { history } = this.props;
+      history.push(`/see/${searchValue}`);
+    });
   }
 
   openSide = () => {
@@ -36,15 +36,13 @@ class AppProvider extends React.Component {
 
   render() {
     const { children } = this.props;
-    const {
-      data, searchValue, sideIsOpen, selectedNode,
-    } = this.state;
+    const { searchValue, sideIsOpen, selectedNode } = this.state;
+
     return (
       <AppContext.Provider value={{
-        data,
+        searchValue,
         sideIsOpen,
         selectedNode,
-        searchValue,
         setNode: this.setNode,
         setSearchValue: this.setSearchValue,
         openSide: this.openSide,
