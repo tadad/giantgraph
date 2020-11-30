@@ -13,10 +13,8 @@ export function App() {
     <>
       <AppProvider>
         <Route exact path="/" component={Home} />
-      </AppProvider>
-      <Route path="/about" component={About} />
-      <Route path="/see">
-        <AppProvider>
+        <Route path="/about" component={About} />
+        <Route path="/see">
           <div className="row">
             <div className="col-lg" id="graph">
               <Graph />
@@ -26,8 +24,8 @@ export function App() {
               <SideTab />
             </div>
           </div>
-        </AppProvider>
-      </Route>
+        </Route>
+      </AppProvider>
     </>
   );
 }

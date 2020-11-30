@@ -26,6 +26,7 @@ export class NavBar extends React.Component {
       <AppContext.Consumer>
         { (context) => (
           <form onSubmit={(e) => context.setSearchValue(e, value)}>
+            {console.log(context)}
             <input type="search" onChange={this.onChange} placeholder="Search..." />
           </form>
         )}

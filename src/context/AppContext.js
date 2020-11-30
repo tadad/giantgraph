@@ -1,5 +1,5 @@
 import React from 'react';
-import axios from 'axios';
+// import axios from 'axios';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
@@ -15,7 +15,7 @@ class AppProvider extends React.Component {
       selectedNode: null,
     };
 
-    this.setState = this.setState.bind(this);
+    // this.setState = this.setState.bind(this);
   }
 
   setNode = (node) => {
@@ -24,7 +24,7 @@ class AppProvider extends React.Component {
 
   setSearchValue = (e, searchValue) => {
     this.setState({ searchValue }, () => {
-      console.log(`setting search value: ${this.state.searchValue}`); //eslint-disable-line
+      // console.log(`setting search value: ${this.state.searchValue}`); //eslint-disable-line
       const { history } = this.props;
       history.push(`/see/${searchValue}`);
       e.preventDefault();
@@ -33,20 +33,27 @@ class AppProvider extends React.Component {
     this.getData(searchValue);
   }
 
-  getData = (searchValue) => {
-    let test = {};
-    console.log(`searchValue (componentDidMount): ${searchValue}...`); // for some reason this is not updated
+  getData = async (searchValue) => {
+    // let test = {};
     if (searchValue) {
       const search = `/api/see/${searchValue}`;
-      console.log(`fetching ${search}`);
-      axios.get(search)
-        .then((res) => {
-          test = res.data;
-          console.log(`line 45 ${res.data}`);
-        })
-        .then(
-          this.setState({ data: test }, () => console.log(`line 48 ${this.state.data}`)) //eslint-disable-line
-        );
+
+      const req = fetch(search); // axios.get(search);
+      // console.log(req instanceof Promise);
+      const res = await req;
+      // console.log(res);
+      this.setState({ data: res.data });
+      // .then((res) => {
+      //   test = res.data;
+      //   console.log('line 45');
+      //   console.log(test);
+      // });
+      // .then(
+      //   this.setState({ data: test }, () => {
+      //     console.log('line 50');
+      //     console.log(this.state.data);  //eslint-disable-line
+      //   }),
+      // );
       // .then((res) => console.log(res.data));
     }
   }
