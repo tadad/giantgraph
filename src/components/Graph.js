@@ -15,22 +15,19 @@ export class Graph extends React.Component {
       visited: new Set(),
       highlightLinks: new Set(),
     };
-
-    this.setState = this.setState.bind(this);
-    this.componentDidMount = this.componentDidMount.bind(this);
   }
 
   componentDidMount() {
     const { searchValue } = this.context;
     console.log(`searchValue (componentDidMount): ${searchValue}...`); // for some reason this is not updated
-    if (!searchValue) { return; }
-    const search = `/api/see/${searchValue}`;
-    console.log(`fetching ${search}`);
-    axios.get(search)
-      .then((res) => { this.setState({ data: res.data }); });  // eslint-disable-line
-    // , () => {console.log(this.state.data);
-    //   this.render();
-    // }));
+    if (searchValue) {
+      const search = `/api/see/${searchValue}`;
+      console.log(`fetching ${search}`);
+      axios.get(search)
+        .then((res) => { this.setState({ data: res.data }); });
+      // , () => {console.log(this.state.data);
+      // }));
+    }
   }
 
   render() {
