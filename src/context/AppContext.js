@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
@@ -8,23 +9,46 @@ class AppProvider extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      data: {},
       searchValue: 'renaissance',
       sideIsOpen: false,
       selectedNode: null,
     };
+
+    this.setState = this.setState.bind(this);
   }
 
   setNode = (node) => {
     this.setState({ selectedNode: node });
   }
 
-  setSearchValue = (searchValue) => {
+  setSearchValue = (e, searchValue) => {
     this.setState({ searchValue }, () => {
       console.log(`setting search value: ${this.state.searchValue}`); //eslint-disable-line
       const { history } = this.props;
       history.push(`/see/${searchValue}`);
+      e.preventDefault();
       // check if you need to do a preventDefault() here to stop a hard page reload
     });
+    this.getData(searchValue);
+  }
+
+  getData = (searchValue) => {
+    let test = {};
+    console.log(`searchValue (componentDidMount): ${searchValue}...`); // for some reason this is not updated
+    if (searchValue) {
+      const search = `/api/see/${searchValue}`;
+      console.log(`fetching ${search}`);
+      axios.get(search)
+        .then((res) => {
+          test = res.data;
+          console.log(`line 45 ${res.data}`);
+        })
+        .then(
+          this.setState({ data: test }, () => console.log(`line 48 ${this.state.data}`)) //eslint-disable-line
+        );
+      // .then((res) => console.log(res.data));
+    }
   }
 
   openSide = () => {
@@ -37,10 +61,13 @@ class AppProvider extends React.Component {
 
   render() {
     const { children } = this.props;
-    const { searchValue, sideIsOpen, selectedNode } = this.state;
+    const {
+      data, searchValue, sideIsOpen, selectedNode,
+    } = this.state;
 
     return (
       <AppContext.Provider value={{
+        data,
         searchValue,
         sideIsOpen,
         selectedNode,

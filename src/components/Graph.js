@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axios';
 import ForceGraph2D from 'react-force-graph-2d';
 import { AppContext } from '../context/AppContext';
 
@@ -9,7 +8,6 @@ export class Graph extends React.Component {
 
     this.fgRef = React.createRef(); // Couldn't find a way to do this without refs...
     this.state = {
-      data: {},
       hoverNode: '',
       cursor: 'default',
       visited: new Set(),
@@ -17,25 +15,13 @@ export class Graph extends React.Component {
     };
   }
 
-  componentDidMount() {
-    // Pull the context out of the componentDidMount (only gets called once so
-    // it'll only update the searchValue once)
-    const { searchValue } = this.context;
-    console.log(`searchValue (componentDidMount): ${searchValue}...`); // for some reason this is not updated
-    if (searchValue) {
-      const search = `/api/see/${searchValue}`;
-      console.log(`fetching ${search}`);
-      axios.get(search)
-        .then((res) => { this.setState({ data: res.data }); });
-      // , () => {console.log(this.state.data);
-      // }));
-    }
-  }
-
   render() {
-    const { data, cursor } = this.state;
-    const { selectedNode, setNode, openSide } = this.context;
-    return (data.nodes === undefined ? <div> Loading </div> : (
+    const { cursor } = this.state;
+    const {
+      data, selectedNode, setNode, openSide,
+    } = this.context;
+
+    return (data === {} ? <div> Loading </div> : (
       <AppContext.Consumer>
         <div style={{ cursor }}>
           <ForceGraph2D
