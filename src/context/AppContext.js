@@ -1,5 +1,5 @@
 import React from 'react';
-// import axios from 'axios';
+import axios from 'axios';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
@@ -14,8 +14,6 @@ class AppProvider extends React.Component {
       sideIsOpen: false,
       selectedNode: null,
     };
-
-    // this.setState = this.setState.bind(this);
   }
 
   setNode = (node) => {
@@ -28,48 +26,22 @@ class AppProvider extends React.Component {
       const { history } = this.props;
       history.push(`/see/${searchValue}`);
       e.preventDefault();
-      // check if you need to do a preventDefault() here to stop a hard page reload
     });
     this.getData(searchValue);
   }
 
   getData = async (searchValue) => {
-    // let test = {};
     if (searchValue) {
       const search = `/api/see/${searchValue}`;
-      const req = fetch(search);
-      const res = await req;
-      console.log(res);
-
-      // const res = {
-      //   data: {
-      //     nodes: [
-      //       { id: 1, name: 'test', description: 'test' },
-      //       { id: 2, name: 'test', description: 'test' },
-      //     ],
-      //     links: [
-      //       { source: 1, target: 2 },
-      //     ],
-      //   },
-      // };
-      this.setState({ data: res.data });
-
-      // OLD CODE
-      // axios.get(search);
-      // console.log(req instanceof Promise);
-      // console.log(res);
-      // .then((res) => {
-      //   test = res.data;
-      //   console.log('line 45');
-      //   console.log(test);
-      // });
-      // .then(
-      //   this.setState({ data: test }, () => {
-      //     console.log('line 50');
-      //     console.log(this.state.data);  //eslint-disable-line
-      //   }),
-      // );
-      // .then((res) => console.log(res.data));
+      axios.get(search)
+        .then((res) => {
+          console.log('line 45');
+          console.log(res.data);
+          this.setState({ data: res.data }, () => {
+            console.log('line 50');
+            console.log(this.state.data);  //eslint-disable-line
+          });
+        });
     }
   }
 
