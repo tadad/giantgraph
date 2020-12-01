@@ -9,7 +9,7 @@ class AppProvider extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: {},
+      data: { nodes: [], links: [] },
       searchValue: 'renaissance',
       sideIsOpen: false,
       selectedNode: null,

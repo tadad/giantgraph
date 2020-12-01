@@ -10,8 +10,8 @@ import './App.css';
 
 export function App() {
   return (
-    <>
-      <AppProvider>
+    <AppProvider>
+      <>
         <Route exact path="/" component={Home} />
         <Route path="/about" component={About} />
         <Route path="/see">
@@ -25,8 +25,8 @@ export function App() {
             </div>
           </div>
         </Route>
-      </AppProvider>
-    </>
+      </>
+    </AppProvider>
   );
 }
 
