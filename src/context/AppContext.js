@@ -36,22 +36,22 @@ class AppProvider extends React.Component {
   getData = async (searchValue) => {
     // let test = {};
     if (searchValue) {
-      // const search = `/api/see/${searchValue}`;
-      // const req = fetch('https://run.mocky.io/v3/5de8bf00-be12-4456-9643-56b95ce1cf68');
-      // const res = await req;
-      // console.log(res);
+      const search = `/api/see/${searchValue}`;
+      const req = fetch(search);
+      const res = await req;
+      console.log(res);
 
-      const res = {
-        data: {
-          nodes: [
-            { id: 1, name: 'test', description: 'test' },
-            { id: 2, name: 'test', description: 'test' },
-          ],
-          links: [
-            { source: 1, target: 2 },
-          ],
-        },
-      };
+      // const res = {
+      //   data: {
+      //     nodes: [
+      //       { id: 1, name: 'test', description: 'test' },
+      //       { id: 2, name: 'test', description: 'test' },
+      //     ],
+      //     links: [
+      //       { source: 1, target: 2 },
+      //     ],
+      //   },
+      // };
       this.setState({ data: res.data });
 
       // OLD CODE
