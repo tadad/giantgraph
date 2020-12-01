@@ -24,7 +24,8 @@ export class Graph extends React.Component {
     return (
       <AppContext.Consumer>
         {(context) => {
-          if (context && context.data && !context.data.nodes) { return <div> Loading </div>; }
+          // fix this conditional
+          if (context.data && !context.data.nodes) { return <div> Loading </div>; }
           return (
             <div style={{ cursor }}>
               <ForceGraph2D
