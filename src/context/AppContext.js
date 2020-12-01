@@ -36,13 +36,26 @@ class AppProvider extends React.Component {
   getData = async (searchValue) => {
     // let test = {};
     if (searchValue) {
-      const search = `/api/see/${searchValue}`;
-
-      const req = fetch(search); // axios.get(search);
-      // console.log(req instanceof Promise);
-      const res = await req;
-      // console.log(res);
+      // const search = `/api/see/${searchValue}`;
+      // const req = fetch(search);
+      // const res = await req;
+      const res = {
+        data: {
+          nodes: [
+            { id: 1, name: 'test', description: 'asdf' },
+            { id: 2, name: 'test', description: 'asdf' },
+          ],
+          links: [
+            { source: 1, target: 2 },
+          ],
+        },
+      };
       this.setState({ data: res.data });
+
+      // OLD CODE
+      // axios.get(search);
+      // console.log(req instanceof Promise);
+      // console.log(res);
       // .then((res) => {
       //   test = res.data;
       //   console.log('line 45');
