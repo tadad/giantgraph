@@ -5,20 +5,21 @@ import { NavBar } from './NavBar';
 export default function Home() {
   return (
     <>
-      <div className="row h-100">
+      <div className="row h-75">
         <div className="col-lg-6 offset-md-3 my-auto">
-          <h1 className="text-center mb-3">Wikigraph</h1>
+          <img src="/wg_small.png" alt="" style={{ maxWidth: '20%' }} />
+          <img src="/wg_text.png" alt="Wikigraph" style={{ maxWidth: '80%' }} />
           <Route component={NavBar} />
-          <p className="text-muted"><Link to="/about">about</Link></p>
         </div>
       </div>
       <div className="row fixed-bottom">
         <div className="col-lg-6 offset-md-3 text-center">
           <p>
             a drop from the
-            <a href="https://www.koodos.com"> koodos collective</a>
+            <a style={{ color: '#47EED0' }} href="https://www.koodos.com" target="_blank" rel="noreferrer"> koodos collective</a>
           </p>
         </div>
+        <Link to="/about"><p style={{ bottom: 0, right: '15px', position: 'fixed' }}>🤔📖</p></Link>
       </div>
     </>
   );
