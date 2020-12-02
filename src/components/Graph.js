@@ -20,7 +20,8 @@ export class Graph extends React.Component {
     const {
       data, selectedNode, setNode, openSide,
     } = this.context;
-
+    console.log('in graph');
+    console.log(data);
     return (
       <AppContext.Consumer>
         {(context) => {
@@ -33,15 +34,15 @@ export class Graph extends React.Component {
                 graphData={data}
                 enableNodeDrag={false}
                 nodeLabel="description"
-                nodeCanvasObject={(node, ctx, globalScale) => {
+                nodeCanvasObject={(node, ctx) => {
                   const { hoverNode, visited } = this.state;
                   // this formula has to change
-                  const fontSize = Math.max((node.value * 300) / globalScale, 2);
+                  // const fontSize = Math.max((node.value * 300) / globalScale, 2);
+                  // node.val = fontSize; // eslint-disable-line
 
-                  ctx.font = `${fontSize}px Times-new-roman`;
+                  ctx.font = `${node.val}px Times-new-roman`;
 
                   // fontsize won't need to be calculated in front-end once server is hooked up
-                  node.val = fontSize; // eslint-disable-line
 
                   ctx.textAlign = 'center';
                   ctx.textBaseline = 'middle';
