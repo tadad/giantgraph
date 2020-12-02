@@ -11,10 +11,11 @@ export function SideTab() {
       && (
       <div id="SideTab">
         <button type="button" className="btn close-btn" onClick={closeSide}>&times;</button>
-        <h1 id="info-title">{selectedNode.name}</h1>
+        <a href={selectedNode.href} target="_blank" rel="noreferrer" id="wiki-link">
+          <h1 id="info-title">{selectedNode.name}</h1>
+        </a>
         <hr />
         <p id="main-info">{selectedNode.description}</p>
-        <p><a href={selectedNode.href} target="_blank" rel="noreferrer" id="wiki-link">Read More</a></p>
       </div>
       )}
     </>
