@@ -17,92 +17,79 @@ export class Graph extends React.Component {
 
   render() {
     const { cursor } = this.state;
-    const {
-      data, selectedNode, setNode, openSide,
-    } = this.context;
-    console.log('in graph');
-    console.log(data);
+
     return (
       <AppContext.Consumer>
-        {(context) => {
-          // fix this conditional
-          if (context.data && !context.data.nodes) { return <div> Loading </div>; }
-          return (
-            <div style={{ cursor }}>
-              <ForceGraph2D
-                ref={this.fgRef}
-                graphData={data}
-                enableNodeDrag={false}
-                nodeLabel="description"
-                nodeCanvasObject={(node, ctx) => {
-                  const { hoverNode, visited } = this.state;
-                  // this formula has to change
-                  // const fontSize = Math.max((node.value * 300) / globalScale, 2);
-                  // node.val = fontSize; // eslint-disable-line
+        {(context) => (
+          <div style={{ cursor }}>
+            <ForceGraph2D
+              ref={this.fgRef}
+              graphData={context.data}
+              enableNodeDrag={false}
+              nodeLabel="description"
+              nodeCanvasObject={(node, ctx) => {
+                const { hoverNode, visited } = this.state;
+                const fontSize = [1, 5, 50, 100][node.val];
+                ctx.font = `${fontSize}px Times-new-roman`;
 
-                  ctx.font = `${node.val}px Times-new-roman`;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
 
-                  // fontsize won't need to be calculated in front-end once server is hooked up
+                // switch temp-variable at end
+                // I'm just gonna like not even comment on this but yeah I gagged
+                let color;
+                if (context.selectedNode && context.selectedNode.id === node.id) {
+                  color = '#0000FF';
+                } else if (hoverNode === node) {
+                  color = '#751F80';
+                } else if (visited.has(node.id)) {
+                  color = '#751F80';
+                } else {
+                  color = '#0645BD';
+                }
 
-                  ctx.textAlign = 'center';
-                  ctx.textBaseline = 'middle';
+                ctx.fillStyle = color;
 
-                  // switch temp-variable at end
-                  // I'm just gonna like not even comment on this but yeah I gagged
-                  let color;
-                  if (selectedNode && selectedNode.id === node.id) {
-                    color = '#0000FF';
-                  } else if (hoverNode === node) {
-                    color = '#751F80';
-                  } else if (visited.has(node.id)) {
-                    color = '#751F80';
-                  } else {
-                    color = '#0645BD';
-                  }
+                ctx.fillText(node.name, node.x, node.y);
+              }}
+              onNodeHover={(node) => {
+                if (node) {
+                  this.setState({ cursor: 'pointer', hoverNode: node });
+                } else {
+                  this.setState({ cursor: 'default', hoverNode: null });
+                }
+              }}
+              onNodeClick={(node) => {
+                if (node) {
+                  const { visited } = this.state;
+                  context.setNode(node);
+                  context.openSide();
 
-                  ctx.fillStyle = color;
+                  const newHighlightLinks = new Set(context.data.links.filter(
+                    (link) => link.source.id === node.id || link.target.id === node.id,
+                  ));
 
-                  ctx.fillText(node.name, node.x, node.y);
-                }}
-                onNodeHover={(node) => {
-                  if (node) {
-                    this.setState({ cursor: 'pointer', hoverNode: node });
-                  } else {
-                    this.setState({ cursor: 'default', hoverNode: null });
-                  }
-                }}
-                onNodeClick={(node) => {
-                  if (node) {
-                    const { visited } = this.state;
-                    setNode(node);
-                    openSide();
+                  this.setState({ highlightLinks: newHighlightLinks });
 
-                    const newHighlightLinks = new Set(data.links.filter(
-                      (link) => link.source.id === node.id || link.target.id === node.id,
-                    ));
+                  this.setState({ visited: visited.add(node.id) });
+                  // ^problems with this:
+                  //    b) You're doing logic in a setState
 
-                    this.setState({ highlightLinks: newHighlightLinks });
-
-                    this.setState({ visited: visited.add(node.id) });
-                    // ^problems with this:
-                    //    b) You're doing logic in a setState
-
-                    // Change node.x to something to do with screen width
-                    this.fgRef.current.centerAt(node.x - 40, node.y, 1000);
-                    this.fgRef.current.zoom(5, 2000);
-                  }
-                }}
-                onBackgroundClick={() => {
-                  this.setState({ highlightLinks: new Set() });
-                }}
-                // no need to destructure here
-                linkWidth={(link) => (this.state.highlightLinks.has(link) ? 5 : 1)} // eslint-disable-line
-                cooldownTicks={50}
-                onEngineStop={() => this.fgRef.current.zoomToFit(400)}
-              />
-            </div>
-          );
-        }}
+                  // Change node.x to something to do with screen width
+                  this.fgRef.current.centerAt(node.x - 40, node.y, 1000);
+                  this.fgRef.current.zoom(5, 2000);
+                }
+              }}
+              onBackgroundClick={() => {
+                this.setState({ highlightLinks: new Set() });
+              }}
+              // no need to destructure here
+              linkWidth={(link) => (this.state.highlightLinks.has(link) ? 5 : 1)} // eslint-disable-line
+              cooldownTicks={50}
+              onEngineStop={() => this.fgRef.current.zoomToFit(400)}
+            />
+          </div>
+        )}
       </AppContext.Consumer>
     );
   }

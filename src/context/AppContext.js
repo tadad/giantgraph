@@ -10,7 +10,7 @@ class AppProvider extends React.Component {
     super(props);
     this.state = {
       data: { nodes: [], links: [] },
-      searchValue: 'renaissance',
+      searchValue: '',
       sideIsOpen: false,
       selectedNode: null,
     };
@@ -22,7 +22,6 @@ class AppProvider extends React.Component {
 
   setSearchValue = (e, searchValue) => {
     this.setState({ searchValue }, () => {
-      // console.log(`setting search value: ${this.state.searchValue}`); //eslint-disable-line
       const { history } = this.props;
       history.push(`/see/${searchValue}`);
       e.preventDefault();
@@ -37,10 +36,7 @@ class AppProvider extends React.Component {
         .then((res) => {
           console.log('line 45');
           console.log(res.data);
-          this.setState({ data: res.data }, () => {
-            console.log('line 50');
-            console.log(this.state.data);  //eslint-disable-line
-          });
+          this.setState({ data: res.data });
         });
     }
   }
