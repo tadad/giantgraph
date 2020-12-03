@@ -10,15 +10,13 @@ import './App.css';
 
 export function App() {
   return (
-    <>
-      <AppProvider>
+    <AppProvider>
+      <>
         <Route exact path="/" component={Home} />
-      </AppProvider>
-      <Route path="/about" component={About} />
-      <Route path="/see">
-        <AppProvider>
-          <div className="row">
-            <div className="col-lg" id="graph">
+        <Route path="/about" component={About} />
+        <Route path="/see">
+          <div className="row h-100">
+            <div className="col-lg h-100" id="graph">
               <Graph />
             </div>
             <div className="col-md-4" id="sidebar">
@@ -26,9 +24,9 @@ export function App() {
               <SideTab />
             </div>
           </div>
-        </AppProvider>
-      </Route>
-    </>
+        </Route>
+      </>
+    </AppProvider>
   );
 }
 

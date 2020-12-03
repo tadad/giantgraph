@@ -5,6 +5,7 @@ import { AppContext } from '../context/AppContext';
 export class Graph extends React.Component {
   constructor() {
     super();
+
     this.fgRef = React.createRef(); // Couldn't find a way to do this without refs...
     this.state = {
       hoverNode: '',
@@ -15,85 +16,93 @@ export class Graph extends React.Component {
   }
 
   render() {
-    const {
-      data, selectedNode, setNode, openSide,
-    } = this.context;
-
     const { cursor } = this.state;
+    if (this.context.data.nodes.length === 0 && this.context.searchValue) { //eslint-disable-line 
+      return (
+        <h1
+          className="my-auto"
+          style={{
+            top: '45%', left: '45%', position: 'fixed', textShadow: '0 0 30px #0A0A0A',
+          }}
+        >
+          Loading...
+        </h1>
+      );
+    }
     return (
-      <div style={{ cursor }}>
-        <ForceGraph2D
-          ref={this.fgRef}
-          graphData={data}
-          enableNodeDrag={false}
-          nodeLabel="href"
-          nodeCanvasObject={(node, ctx, globalScale) => {
-            const { hoverNode, visited } = this.state;
-            // this formula has to change
-            const fontSize = Math.max((node.value * 300) / globalScale, 2);
+      <AppContext.Consumer>
+        {(context) => (
+          <div style={{ cursor }}>
+            <ForceGraph2D
+              ref={this.fgRef}
+              graphData={context.data}
+              enableNodeDrag={false}
+              nodeLabel="description"
+              nodeVal={(node) => [1, 5, 25, 45][node.val]}
+              // nodeCanvasObjectMode="after"
+              nodeCanvasObject={(node, ctx, globalScale) => {
+                const { hoverNode, visited } = this.state;
+                const fontSize = Math.max([1, 5, 25, 45][node.val] / globalScale, 4);
+                // node.val = fontSize; // eslint-disable-line
+                ctx.font = `${fontSize}px Times-new-roman`;
 
-            ctx.font = `${fontSize}px Times-new-roman`;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
 
-            // fontsize won't need to be calculated in front-end once server is hooked up
-            node.val = fontSize; // eslint-disable-line
+                // switch temp-variable at end
+                // I'm just gonna like not even comment on this but yeah I gagged
+                let color;
+                if (context.selectedNode && context.selectedNode.id === node.id) {
+                  color = '#0000FF';
+                } else if (hoverNode === node) {
+                  color = '#751F80';
+                } else if (visited.has(node.id)) {
+                  color = '#751F80';
+                } else {
+                  color = '#0645BD';
+                }
 
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
+                ctx.fillStyle = color;
 
-            // switch temp-variable at end
-            // I'm just gonna like not even comment on this but yeah I gagged
-            let color;
-            if (selectedNode && selectedNode.id === node.id) {
-              color = '#0000FF';
-            } else if (hoverNode === node) {
-              color = '#751F80';
-            } else if (visited.has(node.id)) {
-              color = '#751F80';
-            } else {
-              color = '#0645BD';
-            }
+                ctx.fillText(node.name, node.x, node.y);
+              }}
+              onNodeHover={(node) => {
+                if (node) {
+                  const newHighlightLinks = new Set(context.data.links.filter(
+                    (link) => link.source.id === node.id || link.target.id === node.id,
+                  ));
 
-            ctx.fillStyle = color;
+                  this.setState({ highlightLinks: newHighlightLinks, cursor: 'pointer', hoverNode: node });
+                } else {
+                  this.setState({ cursor: 'default', hoverNode: null });
+                }
+              }}
+              onNodeClick={(node) => {
+                if (node) {
+                  const { visited } = this.state;
+                  context.setNode(node);
+                  context.openSide();
 
-            ctx.fillText(node.name, node.x, node.y);
-          }}
-          onNodeHover={(node) => {
-            if (node) {
-              this.setState({ cursor: 'pointer', hoverNode: node });
-            } else {
-              this.setState({ cursor: 'default', hoverNode: null });
-            }
-          }}
-          onNodeClick={(node) => {
-            if (node) {
-              const { visited } = this.state;
-              setNode(node);
-              openSide();
+                  this.setState({ visited: visited.add(node.id) });
+                  // ^problems with this:
+                  //    b) You're doing logic in a setState
 
-              const newHighlightLinks = new Set(data.links.filter(
-                (link) => link.source.id === node.id || link.target.id === node.id,
-              ));
-
-              this.setState({ highlightLinks: newHighlightLinks });
-
-              this.setState({ visited: visited.add(node.id) });
-              // ^problems with this:
-              //    b) You're doing logic in a setState
-
-              // Change node.x to something to do with screen width
-              this.fgRef.current.centerAt(node.x - 40, node.y, 1000);
-              this.fgRef.current.zoom(5, 2000);
-            }
-          }}
-          onBackgroundClick={() => {
-            this.setState({ highlightLinks: new Set() });
-          }}
-          // no need to destructure here
-          linkWidth={(link) => (this.state.highlightLinks.has(link) ? 5 : 1)} // eslint-disable-line
-          cooldownTicks={50}
-          onEngineStop={() => this.fgRef.current.zoomToFit(400)}
-        />
-      </div>
+                  // node moving around
+                  // this.fgRef.current.centerAt(node.x - 100, node.y, 1000);
+                  // this.fgRef.current.zoom(1, 2000);
+                }
+              }}
+              onBackgroundClick={() => {
+                this.setState({ highlightLinks: new Set() });
+              }}
+              // no need to destructure here
+              linkWidth={(link) => (this.state.highlightLinks.has(link) ? 5 : 1)} // eslint-disable-line
+              cooldownTicks={50}
+              onEngineStop={() => this.fgRef.current.zoomToFit(400)}
+            />
+          </div>
+        )}
+      </AppContext.Consumer>
     );
   }
 }

@@ -3,7 +3,9 @@ import { AppContext } from '../context/AppContext';
 import './SideTab.css';
 
 export function SideTab() {
-  const { sideIsOpen, selectedNode, closeSide } = useContext(AppContext);
+  const {
+    sideIsOpen, selectedNode, selectedSummary, selectedURL, closeSide,
+  } = useContext(AppContext);
 
   return (
     <>
@@ -11,10 +13,11 @@ export function SideTab() {
       && (
       <div id="SideTab">
         <button type="button" className="btn close-btn" onClick={closeSide}>&times;</button>
-        <h1 id="info-title">{selectedNode.name}</h1>
+        <a href={selectedURL} target="_blank" rel="noreferrer" id="wiki-link">
+          <h1 id="info-title">{selectedNode.name}</h1>
+        </a>
         <hr />
-        <p id="main-info">{selectedNode.description}</p>
-        <p><a href={selectedNode.href} target="_blank" rel="noreferrer" id="wiki-link">Read More</a></p>
+        <p id="main-info">{selectedSummary}</p>
       </div>
       )}
     </>

@@ -1,8 +1,6 @@
 #sidebar {
-  margin-top: 5px;
-  margin-left: 5px;
   position: fixed;
-  padding: 7px;
+  padding: 10px;
 
   /* change this to move based on window shape */
   top: 0;
@@ -11,9 +9,8 @@
   background:#F6F6F6;
   max-height:100%;
   overflow-y: scroll;
-
-  box-shadow: 7px 7px rgba(128, 128, 128, 0.2);;
-
+  border-radius: 5px;
+  box-shadow: 0 0 100px 1px rgb(160, 160, 160);
   -ms-overflow-style: none;
   scrollbar-width: none;
 }

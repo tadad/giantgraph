@@ -1,3 +1,7 @@
+11/30 Debug:
+	- Graph.js:21
+	-AppContext.js:26
+
 11/28 Code Review:
 
 General notes that don't belong in specific files:
