@@ -11,6 +11,7 @@ export class Graph extends React.Component {
       hoverNode: '',
       cursor: 'default',
       visited: new Set(),
+      highlightOnHover: true,
       highlightLinks: new Set(),
     };
   }
@@ -68,11 +69,16 @@ export class Graph extends React.Component {
               }}
               onNodeHover={(node) => {
                 if (node) {
-                  const newHighlightLinks = new Set(context.data.links.filter(
-                    (link) => link.source.id === node.id || link.target.id === node.id,
-                  ));
+                  const { highlightOnHover } = this.state;
 
-                  this.setState({ highlightLinks: newHighlightLinks, cursor: 'pointer', hoverNode: node });
+                  if (highlightOnHover) {
+                    const newHighlightLinks = new Set(context.data.links.filter(
+                      (link) => link.source.id === node.id || link.target.id === node.id,
+                    ));
+                    this.setState({ highlightLinks: newHighlightLinks });
+                  }
+
+                  this.setState({ cursor: 'pointer', hoverNode: node });
                 } else {
                   this.setState({ cursor: 'default', hoverNode: null });
                 }
@@ -84,16 +90,11 @@ export class Graph extends React.Component {
                   context.openSide();
 
                   this.setState({ visited: visited.add(node.id) });
-                  // ^problems with this:
-                  //    b) You're doing logic in a setState
-
-                  // node moving around
-                  // this.fgRef.current.centerAt(node.x - 100, node.y, 1000);
-                  // this.fgRef.current.zoom(1, 2000);
+                  this.setState({ highlightOnHover: false });
                 }
               }}
               onBackgroundClick={() => {
-                this.setState({ highlightLinks: new Set() });
+                this.setState({ highlightLinks: new Set(), highlightOnHover: true });
               }}
               // no need to destructure here
               linkWidth={(link) => (this.state.highlightLinks.has(link) ? 5 : 1)} // eslint-disable-line
