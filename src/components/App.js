@@ -15,8 +15,8 @@ export function App() {
         <Route exact path="/" component={Home} />
         <Route path="/about" component={About} />
         <Route path="/see">
-          <div className="row">
-            <div className="col-lg" id="graph">
+          <div className="row h-100">
+            <div className="col-lg h-100" id="graph">
               <Graph />
             </div>
             <div className="col-md-4" id="sidebar">

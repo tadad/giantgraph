@@ -17,7 +17,18 @@ export class Graph extends React.Component {
 
   render() {
     const { cursor } = this.state;
-
+    if (this.context.data.nodes.length === 0 && this.context.searchValue) { //eslint-disable-line 
+      return (
+        <h1
+          className="my-auto"
+          style={{
+            top: '45%', left: '45%', position: 'fixed', textShadow: '0 0 30px #0A0A0A',
+          }}
+        >
+          Loading...
+        </h1>
+      );
+    }
     return (
       <AppContext.Consumer>
         {(context) => (
