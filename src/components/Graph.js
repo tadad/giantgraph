@@ -38,9 +38,11 @@ export class Graph extends React.Component {
               graphData={context.data}
               enableNodeDrag={false}
               nodeLabel="description"
+              nodeVal={(node) => [1, 5, 25, 45][node.val]}
+              // nodeCanvasObjectMode="after"
               nodeCanvasObject={(node, ctx, globalScale) => {
                 const { hoverNode, visited } = this.state;
-                const fontSize = Math.max([1, 1, 25, 45][node.val] / globalScale, 4);
+                const fontSize = Math.max([1, 5, 25, 45][node.val] / globalScale, 4);
                 // node.val = fontSize; // eslint-disable-line
                 ctx.font = `${fontSize}px Times-new-roman`;
 
@@ -66,7 +68,11 @@ export class Graph extends React.Component {
               }}
               onNodeHover={(node) => {
                 if (node) {
-                  this.setState({ cursor: 'pointer', hoverNode: node });
+                  const newHighlightLinks = new Set(context.data.links.filter(
+                    (link) => link.source.id === node.id || link.target.id === node.id,
+                  ));
+
+                  this.setState({ highlightLinks: newHighlightLinks, cursor: 'pointer', hoverNode: node });
                 } else {
                   this.setState({ cursor: 'default', hoverNode: null });
                 }
@@ -77,19 +83,13 @@ export class Graph extends React.Component {
                   context.setNode(node);
                   context.openSide();
 
-                  const newHighlightLinks = new Set(context.data.links.filter(
-                    (link) => link.source.id === node.id || link.target.id === node.id,
-                  ));
-
-                  this.setState({ highlightLinks: newHighlightLinks });
-
                   this.setState({ visited: visited.add(node.id) });
                   // ^problems with this:
                   //    b) You're doing logic in a setState
 
-                  // Change node.x to something to do with screen width
-                  this.fgRef.current.centerAt(node.x - 100, node.y, 1000);
-                  this.fgRef.current.zoom(1, 2000);
+                  // node moving around
+                  // this.fgRef.current.centerAt(node.x - 100, node.y, 1000);
+                  // this.fgRef.current.zoom(1, 2000);
                 }
               }}
               onBackgroundClick={() => {
