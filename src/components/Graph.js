@@ -27,9 +27,9 @@ export class Graph extends React.Component {
               graphData={context.data}
               enableNodeDrag={false}
               nodeLabel="description"
-              nodeCanvasObject={(node, ctx) => {
+              nodeCanvasObject={(node, ctx, globalScale) => {
                 const { hoverNode, visited } = this.state;
-                const fontSize = [1, 5, 50, 100][node.val];
+                const fontSize = Math.max([1, 1, 25, 45][node.val] / globalScale, 4);
                 ctx.font = `${fontSize}px Times-new-roman`;
 
                 ctx.textAlign = 'center';
@@ -77,7 +77,7 @@ export class Graph extends React.Component {
 
                   // Change node.x to something to do with screen width
                   this.fgRef.current.centerAt(node.x - 40, node.y, 1000);
-                  this.fgRef.current.zoom(5, 2000);
+                  this.fgRef.current.zoom(1, 2000);
                 }
               }}
               onBackgroundClick={() => {

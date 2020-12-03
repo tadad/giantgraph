@@ -3,7 +3,9 @@ import { AppContext } from '../context/AppContext';
 import './SideTab.css';
 
 export function SideTab() {
-  const { sideIsOpen, selectedNode, closeSide } = useContext(AppContext);
+  const {
+    sideIsOpen, selectedNode, selectedSummary, closeSide,
+  } = useContext(AppContext);
 
   return (
     <>
@@ -15,7 +17,7 @@ export function SideTab() {
           <h1 id="info-title">{selectedNode.name}</h1>
         </a>
         <hr />
-        <p id="main-info">{selectedNode.description}</p>
+        <p id="main-info">{selectedSummary}</p>
       </div>
       )}
     </>

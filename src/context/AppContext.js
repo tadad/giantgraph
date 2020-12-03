@@ -13,16 +13,19 @@ class AppProvider extends React.Component {
       searchValue: '',
       sideIsOpen: false,
       selectedNode: null,
+      selectedSummary: '',
     };
   }
 
   setNode = (node) => {
     this.setState({ selectedNode: node });
+    this.setState({ selectedSummary: '' });
   }
 
   setSearchValue = (e, searchValue) => {
+    this.setState({ data: { nodes: [], links: [] } });
     this.setState({ searchValue }, () => {
-      console.log(`setting search value: ${this.state.searchValue}`); //eslint-disable-line
+      // console.log(`setting search value: ${this.state.searchValue}`); //eslint-disable-line
       const { history } = this.props;
       history.push(`/see/${searchValue}`);
       e.preventDefault();
@@ -42,8 +45,17 @@ class AppProvider extends React.Component {
     }
   }
 
+  getSide = async (nodeName) => {
+    const search = `/api/meta/${nodeName}`;
+    axios.get(search)
+      .then((res) => {
+        this.setState({ selectedSummary: res.data.summary });
+      });
+  }
+
   openSide = () => {
     this.setState({ sideIsOpen: true });
+    this.getSide(this.state.selectedNode.name); //eslint-disable-line
   }
 
   closeSide = () => {
@@ -53,7 +65,7 @@ class AppProvider extends React.Component {
   render() {
     const { children } = this.props;
     const {
-      data, searchValue, sideIsOpen, selectedNode,
+      data, searchValue, sideIsOpen, selectedNode, selectedSummary,
     } = this.state;
 
     return (
@@ -62,6 +74,7 @@ class AppProvider extends React.Component {
         searchValue,
         sideIsOpen,
         selectedNode,
+        selectedSummary,
         setNode: this.setNode,
         setSearchValue: this.setSearchValue,
         openSide: this.openSide,
