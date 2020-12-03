@@ -4,7 +4,7 @@ import './SideTab.css';
 
 export function SideTab() {
   const {
-    sideIsOpen, selectedNode, selectedSummary, closeSide,
+    sideIsOpen, selectedNode, selectedSummary, selectedURL, closeSide,
   } = useContext(AppContext);
 
   return (
@@ -13,7 +13,7 @@ export function SideTab() {
       && (
       <div id="SideTab">
         <button type="button" className="btn close-btn" onClick={closeSide}>&times;</button>
-        <a href={selectedNode.href} target="_blank" rel="noreferrer" id="wiki-link">
+        <a href={selectedURL} target="_blank" rel="noreferrer" id="wiki-link">
           <h1 id="info-title">{selectedNode.name}</h1>
         </a>
         <hr />

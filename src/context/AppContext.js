@@ -14,12 +14,13 @@ class AppProvider extends React.Component {
       sideIsOpen: false,
       selectedNode: null,
       selectedSummary: '',
+      selectedURL: '',
     };
   }
 
   setNode = (node) => {
     this.setState({ selectedNode: node });
-    this.setState({ selectedSummary: '' });
+    this.setState({ selectedSummary: '', selectedURL: '' });
   }
 
   setSearchValue = (e, searchValue) => {
@@ -49,7 +50,7 @@ class AppProvider extends React.Component {
     const search = `/api/meta/${nodeName}`;
     axios.get(search)
       .then((res) => {
-        this.setState({ selectedSummary: res.data.summary });
+        this.setState({ selectedSummary: res.data.summary, selectedURL: res.data.url });
       });
   }
 
@@ -65,7 +66,7 @@ class AppProvider extends React.Component {
   render() {
     const { children } = this.props;
     const {
-      data, searchValue, sideIsOpen, selectedNode, selectedSummary,
+      data, searchValue, sideIsOpen, selectedNode, selectedSummary, selectedURL,
     } = this.state;
 
     return (
@@ -75,6 +76,7 @@ class AppProvider extends React.Component {
         sideIsOpen,
         selectedNode,
         selectedSummary,
+        selectedURL,
         setNode: this.setNode,
         setSearchValue: this.setSearchValue,
         openSide: this.openSide,

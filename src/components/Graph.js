@@ -30,6 +30,7 @@ export class Graph extends React.Component {
               nodeCanvasObject={(node, ctx, globalScale) => {
                 const { hoverNode, visited } = this.state;
                 const fontSize = Math.max([1, 1, 25, 45][node.val] / globalScale, 4);
+                // node.val = fontSize; // eslint-disable-line
                 ctx.font = `${fontSize}px Times-new-roman`;
 
                 ctx.textAlign = 'center';
@@ -76,7 +77,7 @@ export class Graph extends React.Component {
                   //    b) You're doing logic in a setState
 
                   // Change node.x to something to do with screen width
-                  this.fgRef.current.centerAt(node.x - 40, node.y, 1000);
+                  this.fgRef.current.centerAt(node.x - 100, node.y, 1000);
                   this.fgRef.current.zoom(1, 2000);
                 }
               }}
