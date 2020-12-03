@@ -1,7 +1,12 @@
 * {
-  font-family: "Times New Roman", Times, serif;
+  font-family: "arial", sans-serif;
 }
 
-html body {
+html, body, #root {
   overflow: hidden;
+  height: 100%
+}
+
+h1 {
+  font-family: 'Linux Libertine','Georgia','Times',serif
 }
