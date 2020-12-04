@@ -39,8 +39,6 @@ class AppProvider extends React.Component {
       const search = `/api/see/${searchValue}`;
       axios.get(search)
         .then((res) => {
-          console.log('line 45');
-          console.log(res.data);
           this.setState({ data: res.data });
         });
     }

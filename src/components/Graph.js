@@ -18,7 +18,11 @@ export class Graph extends React.Component {
 
   render() {
     const { cursor } = this.state;
-    if (this.context.data.nodes.length === 0 && this.context.searchValue) { //eslint-disable-line 
+    if (
+      this.context.data.nodes !== undefined && //eslint-disable-line 
+      this.context.data.nodes.length === 0 && //eslint-disable-line 
+      this.context.searchValue //eslint-disable-line 
+    ) {
       return (
         <h1
           className="my-auto"

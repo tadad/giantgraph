@@ -15,11 +15,11 @@ export default function Home() {
       <div className="row fixed-bottom">
         <div className="col-lg-6 offset-md-3 text-center">
           <p>
-            a drop from the
-            <a style={{ color: '#47EED0' }} href="https://www.koodos.com" target="_blank" rel="noreferrer"> koodos collective</a>
+            a drop from the&nbsp;
+            <a style={{ color: '#47EED0' }} href="https://www.koodos.com" target="_blank" rel="noreferrer">koodos collective</a>
           </p>
         </div>
-        <Link to="/about"><p style={{ bottom: 0, right: '15px', position: 'fixed' }}>🤔📖</p></Link>
+        <Link to="/about"><h4 style={{ bottom: 0, right: '15px', position: 'fixed' }}>🤔📖</h4></Link>
       </div>
     </>
   );
