@@ -26,7 +26,6 @@ class AppProvider extends React.Component {
   setSearchValue = (e, searchValue) => {
     this.setState({ data: { nodes: [], links: [] }, sideIsOpen: false, selectedNode: null });
     this.setState({ searchValue }, () => {
-      // console.log(`setting search value: ${this.state.searchValue}`); //eslint-disable-line
       const { history } = this.props;
       history.push(`/see/${searchValue}`);
       e.preventDefault();
