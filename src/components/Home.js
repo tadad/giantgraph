@@ -7,8 +7,8 @@ export default function Home() {
     <>
       <div className="row h-75">
         <div className="col-lg-6 offset-md-3 my-auto">
-          <img src="/wg_small.png" alt="" style={{ maxWidth: '20%' }} />
-          <img src="/wg_text.png" alt="Wikigraph" style={{ maxWidth: '80%' }} />
+          <img src={`${process.env.PUBLIC_URL}/wg_small.png`} alt="" style={{ maxWidth: '20%' }} />
+          <img src={`${process.env.PUBLIC_URL}/wg_text.png`} alt="Wikigraph" style={{ maxWidth: '80%' }} />
           <Route component={NavBar} />
         </div>
       </div>

@@ -8,7 +8,7 @@ export function Fallback() {
         <h1>Sorry, something went wrong</h1>
         <h3>
           Try going&nbsp;
-          <a href="https://www.giantgra.ph">home</a>
+          <a href="http://giantgra.ph/">home</a>
           &nbsp;and trying again
         </h3>
       </div>

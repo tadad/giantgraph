@@ -8,8 +8,8 @@ export default function About() {
     <div className="row h-75">
       <div className="col-lg-6 offset-md-3 my-auto">
         <Link to="/">
-          <img src="/wg_small.png" alt="" style={{ maxWidth: '10%' }} />
-          <img src="/wg_text.png" alt="Wikigraph" style={{ maxWidth: '40%' }} />
+          <img src={`${process.env.PUBLIC_URL}/wg_small.png`} alt="" style={{ maxWidth: '10%' }} />
+          <img src={`${process.env.PUBLIC_URL}/wg_text.png`} alt="Wikigraph" style={{ maxWidth: '40%' }} />
         </Link>
         <p>
           Read our paper on <a href="https://koodos.substack.com/">Exploration Engines</a>.
