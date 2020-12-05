@@ -15,6 +15,7 @@ class AppProvider extends React.Component {
       selectedNode: null,
       selectedSummary: '',
       selectedURL: '',
+      history: props.history,
     };
   }
 
@@ -24,10 +25,12 @@ class AppProvider extends React.Component {
   }
 
   setSearchValue = (e, searchValue) => {
+    const { history } = this.props;
+    history.push(`/see/${searchValue}`);
+
     this.setState({ data: { nodes: [], links: [] }, sideIsOpen: false, selectedNode: null });
+
     this.setState({ searchValue }, () => {
-      const { history } = this.props;
-      history.push(`/see/${searchValue}`);
       e.preventDefault();
     });
     this.getData(searchValue);
@@ -63,7 +66,7 @@ class AppProvider extends React.Component {
   render() {
     const { children } = this.props;
     const {
-      data, searchValue, sideIsOpen, selectedNode, selectedSummary, selectedURL,
+      data, searchValue, sideIsOpen, selectedNode, selectedSummary, selectedURL, history,
     } = this.state;
 
     return (
@@ -74,6 +77,8 @@ class AppProvider extends React.Component {
         selectedNode,
         selectedSummary,
         selectedURL,
+        history,
+        getData: this.getData,
         setNode: this.setNode,
         setSearchValue: this.setSearchValue,
         openSide: this.openSide,

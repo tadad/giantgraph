@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import ForceGraph2D from 'react-force-graph-2d';
 import { AppContext } from '../context/AppContext';
 
@@ -14,6 +15,16 @@ export class Graph extends React.Component {
       highlightOnHover: true,
       highlightLinks: new Set(),
     };
+  }
+
+  componentDidMount() {
+    const { getData } = this.context;
+
+    const loc = window.location.pathname.split('/');
+    if (loc.length > 2) {
+      const searchVal = loc[2];
+      getData(searchVal);
+    }
   }
 
   render() {
@@ -119,5 +130,9 @@ export class Graph extends React.Component {
 }
 
 Graph.contextType = AppContext;
+
+Graph.propTypes = {
+  history: PropTypes.object.isRequired, // eslint-disable-line
+};
 
 export default Graph;
