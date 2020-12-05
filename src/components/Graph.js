@@ -90,6 +90,12 @@ export class Graph extends React.Component {
               onNodeClick={(node) => {
                 if (node) {
                   const { visited } = this.state;
+
+                  const newHighlightLinks = new Set(context.data.links.filter(
+                    (link) => link.source.id === node.id || link.target.id === node.id,
+                  ));
+                  this.setState({ highlightLinks: newHighlightLinks });
+
                   context.setNode(node);
                   context.openSide();
 
