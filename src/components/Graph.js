@@ -93,6 +93,11 @@ export class Graph extends React.Component {
                     this.setState({ highlightLinks: newHighlightLinks });
                   }
 
+                  const { name } = node;
+                  window.analytics.track('nodehover', {
+                    name,
+                  });
+
                   this.setState({ cursor: 'pointer', hoverNode: node });
                 } else {
                   this.setState({ cursor: 'default', hoverNode: null });
@@ -112,6 +117,11 @@ export class Graph extends React.Component {
 
                   this.setState({ visited: visited.add(node.id) });
                   this.setState({ highlightOnHover: false });
+
+                  const { name } = node;
+                  window.analytics.track('nodeclick', {
+                    name,
+                  });
                 }
               }}
               onBackgroundClick={() => {

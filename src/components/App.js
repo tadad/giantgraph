@@ -1,5 +1,5 @@
-import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Route, Switch, useHistory } from 'react-router-dom';
 import { SideTab } from './SideTab';
 import { NavBar } from './NavBar';
 import { Graph } from './Graph';
@@ -11,6 +11,14 @@ import AppProvider from '../context/AppContext';
 import './App.css';
 
 export function App() {
+  const history = useHistory();
+
+  useEffect(() => {
+    history.listen(() => {
+      window.analytics.page();
+    });
+  });
+
   return (
     <ErrorBoundary>
       <AppProvider>

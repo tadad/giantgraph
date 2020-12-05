@@ -34,6 +34,9 @@ class AppProvider extends React.Component {
       e.preventDefault();
     });
     this.getData(searchValue);
+    window.analytics.track('search', {
+      searchValue,
+    });
   }
 
   getData = async (searchValue) => {
