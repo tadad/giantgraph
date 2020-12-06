@@ -7,7 +7,6 @@ export class Graph extends React.Component {
   constructor() {
     super();
 
-    this.fgRef = React.createRef(); // Couldn't find a way to do this without refs...
     this.state = {
       hoverNode: '',
       cursor: 'default',
@@ -50,23 +49,22 @@ export class Graph extends React.Component {
         {(context) => (
           <div style={{ cursor }}>
             <ForceGraph2D
-              ref={this.fgRef}
               graphData={context.data}
-              enableNodeDrag={false}
+              onNodeDragEnd={(node) => {
+                node.fx = node.x; // eslint-disable-line
+                node.fy = node.y; // eslint-disable-line
+              }}
               nodeLabel="description"
               nodeVal={(node) => [1, 5, 25, 45][node.val]}
-              // nodeCanvasObjectMode="after"
               nodeCanvasObject={(node, ctx, globalScale) => {
                 const { hoverNode, visited } = this.state;
                 const fontSize = Math.max([1, 5, 25, 45][node.val] / globalScale, 4);
-                // node.val = fontSize; // eslint-disable-line
                 ctx.font = `${fontSize}px Times-new-roman`;
 
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'middle';
 
                 // switch temp-variable at end
-                // I'm just gonna like not even comment on this but yeah I gagged
                 let color;
                 if (context.selectedNode && context.selectedNode.id === node.id) {
                   color = '#0000FF';
@@ -130,7 +128,6 @@ export class Graph extends React.Component {
               // no need to destructure here
               linkWidth={(link) => (this.state.highlightLinks.has(link) ? 5 : 1)} // eslint-disable-line
               cooldownTicks={50}
-              onEngineStop={() => this.fgRef.current.zoomToFit(400)}
             />
           </div>
         )}
