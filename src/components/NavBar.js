@@ -30,7 +30,7 @@ export class NavBar extends React.Component {
               <input
                 type="search"
                 onChange={this.onChange}
-                placeholder="Search..."
+                placeholder="Search for a term and get related connections"
                 className="form-control form-control-large"
               />
             </div>
