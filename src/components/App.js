@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { Route, Switch, useHistory } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 import { SideTab } from './SideTab';
 import { NavBar } from './NavBar';
 import { Graph } from './Graph';
@@ -35,6 +36,7 @@ export function App() {
                 <SideTab />
               </div>
             </div>
+            <ToastContainer />
           </Route>
           <Route>
             <NotFound />

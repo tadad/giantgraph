@@ -1,7 +1,9 @@
 import React from 'react';
 import axios from 'axios';
 import { withRouter } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const AppContext = React.createContext();
 
@@ -70,6 +72,19 @@ class AppProvider extends React.Component {
     this.setState({ sideIsOpen: false });
   }
 
+  notify = () => {
+    toast.info('Click nodes for more info, drag to reposition them', {
+      position: 'bottom-right',
+      autoClose: 8000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      progress: undefined,
+    });
+
+    console.log('notify was called');
+  }
+
   render() {
     const { children } = this.props;
     const {
@@ -92,6 +107,7 @@ class AppProvider extends React.Component {
         setSearchValue: this.setSearchValue,
         openSide: this.openSide,
         closeSide: this.closeSide,
+        notify: this.notify,
       }}
       >
         {children}
