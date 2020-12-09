@@ -18,8 +18,7 @@ export class Graph extends React.Component {
   }
 
   componentDidMount() {
-    const { getData, dataIsComing, notify } = this.context;
-    notify();
+    const { getData, dataIsComing } = this.context;
     if (!dataIsComing) {
       const loc = window.location.pathname.split('/');
       if (loc.length > 2) {

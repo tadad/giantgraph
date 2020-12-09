@@ -28,7 +28,7 @@ export function SideTab() {
       <div id="SideTab">
         {
           selectedURL && (
-            <iframe title="cicero" className="wiki-iframe" src={mobileURL.join('.')} />
+            <iframe title="iframe" className="wiki-iframe" src={mobileURL.join('.')} />
           )
         }
       </div>

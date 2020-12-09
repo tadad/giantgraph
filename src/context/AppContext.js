@@ -1,9 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { withRouter } from 'react-router-dom';
-import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
-import 'react-toastify/dist/ReactToastify.css';
 
 export const AppContext = React.createContext();
 
@@ -15,7 +13,6 @@ class AppProvider extends React.Component {
       searchValue: '',
       sideIsOpen: false,
       selectedNode: null,
-      selectedSummary: '',
       selectedURL: '',
       history: props.history,
       dataIsComing: false,
@@ -24,7 +21,7 @@ class AppProvider extends React.Component {
 
   setNode = (node) => {
     this.setState({ selectedNode: node });
-    this.setState({ selectedSummary: '', selectedURL: '' });
+    this.setState({ selectedURL: '' });
   }
 
   setSearchValue = (e, searchValue) => {
@@ -59,7 +56,7 @@ class AppProvider extends React.Component {
     const search = `/api/meta/${nodeName}`;
     axios.get(search)
       .then((res) => {
-        this.setState({ selectedSummary: res.data.summary, selectedURL: res.data.url });
+        this.setState({ selectedURL: res.data.url });
       });
   }
 
@@ -68,27 +65,10 @@ class AppProvider extends React.Component {
     this.getSide(this.state.selectedNode.name); //eslint-disable-line
   }
 
-  closeSide = () => {
-    this.setState({ sideIsOpen: false });
-  }
-
-  notify = () => {
-    toast.info('Click nodes for more info, drag to reposition them', {
-      position: 'bottom-right',
-      autoClose: 8000,
-      hideProgressBar: true,
-      closeOnClick: true,
-      pauseOnHover: true,
-      progress: undefined,
-    });
-
-    console.log('notify was called');
-  }
-
   render() {
     const { children } = this.props;
     const {
-      data, searchValue, sideIsOpen, selectedNode, selectedSummary, selectedURL, history,
+      data, searchValue, sideIsOpen, selectedNode, selectedURL, history,
       dataIsComing,
     } = this.state;
 
@@ -98,7 +78,6 @@ class AppProvider extends React.Component {
         searchValue,
         sideIsOpen,
         selectedNode,
-        selectedSummary,
         selectedURL,
         history,
         dataIsComing,
@@ -107,7 +86,6 @@ class AppProvider extends React.Component {
         setSearchValue: this.setSearchValue,
         openSide: this.openSide,
         closeSide: this.closeSide,
-        notify: this.notify,
       }}
       >
         {children}
