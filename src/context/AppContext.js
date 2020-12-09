@@ -16,6 +16,7 @@ class AppProvider extends React.Component {
       selectedSummary: '',
       selectedURL: '',
       history: props.history,
+      dataIsComing: false,
     };
   }
 
@@ -26,6 +27,7 @@ class AppProvider extends React.Component {
 
   setSearchValue = (e, searchValue) => {
     const { history } = this.props;
+
     history.push(`/see/${searchValue}`);
 
     this.setState({ data: { nodes: [], links: [] }, sideIsOpen: false, selectedNode: null });
@@ -33,6 +35,8 @@ class AppProvider extends React.Component {
     this.setState({ searchValue }, () => {
       e.preventDefault();
     });
+
+    this.setState({ dataIsComing: true });
     this.getData(searchValue);
     window.analytics.track('search', {
       searchValue,
@@ -70,6 +74,7 @@ class AppProvider extends React.Component {
     const { children } = this.props;
     const {
       data, searchValue, sideIsOpen, selectedNode, selectedSummary, selectedURL, history,
+      dataIsComing,
     } = this.state;
 
     return (
@@ -81,6 +86,7 @@ class AppProvider extends React.Component {
         selectedSummary,
         selectedURL,
         history,
+        dataIsComing,
         getData: this.getData,
         setNode: this.setNode,
         setSearchValue: this.setSearchValue,

@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ForceGraph2D from 'react-force-graph-2d';
+import { withRouter } from 'react-router-dom';
 import { AppContext } from '../context/AppContext';
 
 export class Graph extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       hoverNode: '',
@@ -18,11 +19,14 @@ export class Graph extends React.Component {
 
   componentDidMount() {
     const { getData } = this.context;
+    const { dataIsComing } = this.context;
 
-    const loc = window.location.pathname.split('/');
-    if (loc.length > 2) {
-      const searchVal = loc[2];
-      getData(searchVal);
+    if (!dataIsComing) {
+      const loc = window.location.pathname.split('/');
+      if (loc.length > 2) {
+        const searchVal = loc[2];
+        getData(searchVal);
+      }
     }
   }
 
@@ -142,4 +146,4 @@ Graph.propTypes = {
   history: PropTypes.object.isRequired, // eslint-disable-line
 };
 
-export default Graph;
+export default withRouter(Graph);
