@@ -4,20 +4,33 @@ import './SideTab.css';
 
 export function SideTab() {
   const {
-    sideIsOpen, selectedNode, selectedSummary, selectedURL, closeSide,
+    sideIsOpen, selectedURL,
   } = useContext(AppContext);
+
+  const mobileURL = selectedURL.split('.');
+  mobileURL.splice(1, 0, 'm');
 
   return (
     <>
+      {!sideIsOpen
+        && (
+        <div className="preclick-message">
+          <div style={{ padding: '30px' }}>
+            <img src={`${process.env.PUBLIC_URL}/wg_small.png`} alt="" style={{ maxWidth: '20%' }} />
+            <img src={`${process.env.PUBLIC_URL}/wg_text.png`} alt="Wikigraph" style={{ maxWidth: '80%' }} />
+          </div>
+          <p className="text-muted">Click a node to pull up more info here</p>
+          <p className="text-muted">Drag nodes to reposition them</p>
+        </div>
+        )}
       {sideIsOpen
       && (
       <div id="SideTab">
-        <button type="button" className="btn close-btn" onClick={closeSide}>&times;</button>
-        <a href={selectedURL} target="_blank" rel="noreferrer" id="wiki-link">
-          <h1 id="info-title">{selectedNode.name}</h1>
-        </a>
-        <hr />
-        <p id="main-info">{selectedSummary}</p>
+        {
+          selectedURL && (
+            <iframe title="cicero" className="wiki-iframe" src={mobileURL.join('.')} />
+          )
+        }
       </div>
       )}
     </>
