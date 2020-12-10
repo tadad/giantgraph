@@ -4,7 +4,7 @@
   background:#ffffff;
   top: 50px;
   padding : 15px;
-  margin-top: 10px;
+  margin-top: 20px;
   border : solid #D8DCE1 1px;
   border-radius: 3px;
   overflow-x: hidden;
@@ -19,6 +19,8 @@
   width: 100%;
   height: 100%;
   border: none;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 .preclick-message {
