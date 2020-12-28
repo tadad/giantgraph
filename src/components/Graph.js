@@ -129,7 +129,7 @@ export class Graph extends React.Component {
               }}
               // no need to destructure here
               linkWidth={(link) => (this.state.highlightLinks.has(link) ? 5 : 1)} // eslint-disable-line
-              cooldownTicks={50}
+              // cooldownTicks={50}
             />
           </div>
         )}

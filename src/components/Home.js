@@ -10,6 +10,7 @@ export default function Home() {
           <img src={`${process.env.PUBLIC_URL}/wg_small.png`} alt="" style={{ maxWidth: '20%' }} />
           <img src={`${process.env.PUBLIC_URL}/wg_text.png`} alt="Wikigraph" style={{ maxWidth: '80%' }} />
           <Route component={NavBar} />
+          <a href="/see/London">try a demo query</a>
         </div>
       </div>
       <div className="row fixed-bottom">

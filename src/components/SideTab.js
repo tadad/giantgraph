@@ -21,6 +21,7 @@ export function SideTab() {
           </div>
           <p className="text-muted">Click a node to pull up more info here</p>
           <p className="text-muted">Drag nodes to reposition them</p>
+          <p className="text-muted">Scroll to zoom in and out</p>
           <hr />
           <p className="text-muted">(If you are on mobile - support is coming soon!)</p>
         </div>

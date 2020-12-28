@@ -7,6 +7,7 @@
   margin-top: 20px;
   border : solid #D8DCE1 1px;
   border-radius: 3px;
+  overflow-y: hidden;
   overflow-x: hidden;
   }
 
