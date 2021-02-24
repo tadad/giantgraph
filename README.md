@@ -13,6 +13,7 @@ This project lets users explore the birdirectional link strucutre of Wikipedia.
 # Tech Stack
 - React
 - Flask
+- Deployed on Google Cloud
 
 # Credits
 Built by Drew Tada (@drew_tada) and Pam Beardsell  
